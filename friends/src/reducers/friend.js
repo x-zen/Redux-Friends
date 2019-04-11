@@ -3,7 +3,7 @@
 } from "../actions";*/
 
 const initialState = {
-
+  friends: []
 };
 
 export const friendReducer = (state = initialState, action) => {
