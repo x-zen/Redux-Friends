@@ -1,30 +1,65 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { logingIn } from '../../actions';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      credentials: {
+        username: '',
+        password: ''
+      }
+    };
+  }
+
+  handleLogin = e => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [e.target.name]: e.target.value
+      }
+    });
+  }
+
+  logingIn = e => {
+    e.preventDefault();
+    this.props.logingIn(this.state.credentials)
+      .then(() => {
+        this.props.history.push('/friends')
+      })
+  }
+
   render() {
     return (
       <div>
         <h2>LOGIN</h2>
 
-        <form>
+        <form onSubmit={ this.logingIn }>
           <h3>Username:</h3>
           <input
             type='text'
             name='username'
-            placeholder='Username' />
+            placeholder='Username'
+            value={ this.state.credentials.username }
+            onChange={ this.handleLogin } />
           <h3>Password:</h3>
           <input
-            type='text'
+            type='password'
             name='password'
-            placeholder='Password' />
+            placeholder='Password'
+            value={ this.state.credentials.password }
+            onChange={ this.handleLogin } />
           <br />
-          <input
-            type='submit'
-            value='Sign In!' />
+          <button>Sign In!</button>
         </form>
       </div>
     )
   }
 }
 
-export default Login;
+export default connect(
+  null,
+  {logingIn}
+)(Login);

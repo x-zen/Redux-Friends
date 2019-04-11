@@ -3,7 +3,8 @@
 } from "../actions";*/
 
 const initialState = {
-
+  friends: [],
+  err: null
 };
 
 export const loginReducer = (state = initialState, action) => {
